@@ -53,25 +53,38 @@ int main(void)
     FIO2DIR1 &= ~(0b100);
     //tb se puede hacer (4u << 0) (1u << 0)ç
 
+    uint8_t counter = 0;
     for (;;) {
         // Comprobamos si está activo a nivel bajo (si al pulsar le llega un 0)
-        if ((FIO2PIN & (1u << 10))) {
-            // Si no se pulsa, se queda a nivel alto (1): apagamos un LED
-            FIO2CLR = (1u << 0);
-        } else {
-            // Si se cumple, el botón está pulsado: encendemos el LED
-            FIO2SET = (1u <<0);
-        }
-    }
+        if (!(FIO2PIN & (1u << 10))) {
+            //Apago todos los leds primero
+            FIO2CLR = 255u;
+            //Y enciendo los que tocan
+            FIO2SET = counter;
 
-    /*
-    uint8_t counter = 0;
-    FIO2CLR = ~counter;    
-    for (;;) {
-        FIO2SET = counter;
-        FIO2CLR = ~counter; 
-        delay();
-        counter++;
+            counter++;
+            
+            if(counter>15){ //Si se pasa de 15, es decir, 
+                counter=0;
+            }
+            
+            delay();
+
+            //Bucle de espera: nos quedamos atrapados aquí hasta que el usuario 
+            //suelte el botón, evitando que el contador avance solo por dejar el dedo puesto.
+            while (!(FIO2PIN & (1u << 10))) {
+                // No hacemos nada, solo esperamos a que FIO2PIN devuelva un 1 (soltado)
+            }
+            
+            // Otro pequeño retardo al soltar por seguridad contra rebotes
+            delay();
+            
+            // Si se cumple, el botón está pulsado: encendemos el LED
+            //FIO2SET = (1u <<0); //Esto es encender un LED en concreto
+        //} else {
+            // Si no se pulsa, se queda a nivel alto (1): apagamos un LED
+            //FIO2CLR = (1u << 0);
+        }
     }
     */
 }
