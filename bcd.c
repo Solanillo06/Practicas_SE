@@ -4,11 +4,12 @@
 // emplea 2 bits de configuración 00 01 10 11
 #define PINSEL4     (*(volatile uint32_t *)0xE002C010u)
 #define PINMODE4    (*(volatile uint32_t *)0xE002C050)
+
 // mirad el manual de usuario, página: 173 de 706
 // Direccionamos las GPIO de forma indirecta
 // Se pueden incluso emplear máscaras
-#define FIO2DIR     (*(volatile uint32_t *)0x3FFFC040u)
-#define FIO2DIR0     (*(volatile uint8_t *)0x3FFFC040)
+#define FIO2DIR     (*(volatile uint32_t *)0x3FFFC040u) //La dirección de memoria viene en el propio manual la de cada uno
+#define FIO2DIR0     (*(volatile uint8_t *)0x3FFFC040) //Hay que estar pendiente del número de bytes
 #define FIO2DIR1     (*(volatile uint8_t *)0x3FFFC041)
 #define FIO2SET     (*(volatile uint32_t *)0x3FFFC058u)
 #define FIO2CLR     (*(volatile uint32_t *)0x3FFFC05Cu)
@@ -80,9 +81,9 @@ int main(void)
             delay();
             
             // Si se cumple, el botón está pulsado: encendemos el LED
-            //FIO2SET = (1u <<0); //Esto es encender un LED en concreto
+            //FIO2SET = (1u <<0); //Esto es encender LED0 en concreto, de hecho se podría poner FIO2SET=LED0; directamente
         //} else {
-            // Si no se pulsa, se queda a nivel alto (1): apagamos un LED
+            // Si no se pulsa, se queda a nivel alto (1): apagamos el LED
             //FIO2CLR = (1u << 0);
         }
     }
