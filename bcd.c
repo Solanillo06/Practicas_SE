@@ -53,6 +53,16 @@ int main(void)
     FIO2DIR1 &= ~(0b100);
     //tb se puede hacer (4u << 0) (1u << 0)ç
 
+    for (;;) {
+        // Comprobamos si está activo a nivel bajo (si al pulsar le llega un 0)
+        if ((FIO2PIN & (1u << 10))) {
+            // Si no se pulsa, se queda a nivel alto (1): apagamos el LED
+            FIO2CLR = LED0;
+        } else {
+            // Si se cumple, el botón está pulsado: encendemos un LED (por ejemplo, LED0)
+            FIO2SET = LED0;
+        }
+    }
     if(FIO2PIN & (1u << 10))
         //valor true 
 
