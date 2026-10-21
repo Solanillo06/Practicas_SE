@@ -63,9 +63,6 @@ int main(void)
             FIO2SET = LED0;
         }
     }
-    if(FIO2PIN & (1u << 10))
-        //valor true 
-
 
     /*
     uint8_t counter = 0;
