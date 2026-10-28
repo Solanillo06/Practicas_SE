@@ -1,6 +1,7 @@
 Como probar las cosas en la plaquita ya conectada:
 1. En powershell admin: usbipd list
-para ver que número sale en el formato 1-8 (pueden ser otros números)
-2. usbipd attach --wsl --busid 1-8
+para ver  <tu_busid> que es un número en el formato 1-8 (pueden ser otros números)
+2. usbipd bind --busid <tu_busid>
+usbipd attach --wsl --busid  <tu_busid>
 3. En la terminal de ubuntu: lsusb
 para comprobar
