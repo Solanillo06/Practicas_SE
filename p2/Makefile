@@ -1,4 +1,4 @@
-TARGET := input-polling
+TARGET := uart-test
 
 PREFIX := arm-none-eabi-
 
@@ -31,7 +31,7 @@ LDFLAGS := \
 	-Wl,--gc-sections \
 	-Wl,-Map=$(TARGET).map
 
-OBJS := startup.o input-polling.o
+OBJS := startup.o uart-test.o
 
 
 all: $(TARGET).elf $(TARGET).bin
