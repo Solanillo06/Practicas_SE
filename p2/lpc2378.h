@@ -26,7 +26,7 @@
 //pagina 441 
 #define U1CLR (*(volatile uint8_t *)0xE0010018u)
 //pagina 62
-#define PCLKSEL0 (*(volatile uint8_t *)0xE01FC1A8)
+#define PCLKSEL0 (*(volatile uint8_t *)0xE01FC1A8u)
 //437
 #define U1DLL (*(volatile uint8_t *) 0xE0010000u)
 #define U1DLM (*(volatile uint8_t *) 0xE0010004u)
