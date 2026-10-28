@@ -44,22 +44,32 @@ int main(void)
     PINMODE4 &= ~(3u << 20);
 
     //configuracion de la UART1
+    //queremos que UART llegen 4MHz
+    PCLKSEL0 &= ~(1u <<9);
+    PCLKSEL0 |= (1u << 8); 
     //comunicaion 8 bits
     //sin paridad ni bit de parada,etc.
     //y DLAB=1  para configurar velocidad 
-    U1CLR = (3u << 0) |(1u << 7);
+    U1LCR = (3u << 0) | (1u << 7);
+    //calculo de los divisores para la formula de baudios
+    U1DLM =0;
+    U1DLL= 26u;
+    U1FDR =0x10;
+    //desactivamos DLAB
+    U1LCR = (3u << 0);
 
-    U1THR = 'h';
+    U1THR ='h';
     delay();
     U1THR = 'o';
     delay();
     U1THR = 'l';
     delay();
-    U1THR = 'a';
+    U1THR ='a';
     delay();
-    U1THR = '\r';
+    U1THR ='\r';
     delay();
-    U1THR = '\n';
+    U1THR='\n';
+
 
     uint8_t counter = 0;
     FIO2CLR0 = ~counter;    
