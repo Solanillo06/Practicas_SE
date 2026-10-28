@@ -49,7 +49,17 @@ int main(void)
     //y DLAB=1  para configurar velocidad 
     U1CLR = (3u << 0) |(1u << 7);
 
-
+    U1THR = 'h';
+    delay();
+    U1THR = 'o';
+    delay();
+    U1THR = 'l';
+    delay();
+    U1THR = 'a';
+    delay();
+    U1THR = '\r';
+    delay();
+    U1THR = '\n';
 
     uint8_t counter = 0;
     FIO2CLR0 = ~counter;    
