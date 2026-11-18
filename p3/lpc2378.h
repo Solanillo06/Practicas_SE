@@ -47,9 +47,14 @@
 // estado de la línea pág 446
 #define U1LSR       (*(volatile uint8_t*) 0xE0010014u)
 //interrupciones externas, flanco o nivel pág: 37
-#define EXTMODE (*(volatile uint8_t*) 0xE01FC148)
+#define EXTMODE (*(volatile uint8_t*) 0xE01FC148u)
 //interrupciones externas a bajo nivel o alto /flanco a bajo
 // pág 37
-#define EXTPOLAR (*(volatile uint8_t*) 0xE01FC14C)
+#define EXTPOLAR (*(volatile uint8_t*) 0xE01FC14Cu)
+//reseteamos la causa de disparo de la interrupcion
+//util cuando venimos de configurar la interrupcion externa
+//util tambien cuandos e ha producido una interrupcion externa
+// poder resetearla. pág: 35
+#define EXTINT (*(volatile uint8_t*) 0xE01FC140u)
 
 #endif
