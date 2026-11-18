@@ -55,6 +55,9 @@ int main(void)
 {
     // configuramos el puerto como GPIO, valor 00. Página: 
     PINSEL4 &= ~(0b1100001111111111111111);
+    //pin 2.10 ya no es GPIO es !EINT0
+    PINSEL4 &= ~(1u<<21);
+    PINSEL4 |= (1u << 20);
 
     // 8 bits bajos como salidas
     FIO2DIR0 |= 255u;
@@ -83,8 +86,11 @@ int main(void)
     else
         FIO2SET0 = (1u << 3);
     if(myUart1.configured)
-        uart_print(&myUart1, "hola!\r\n");
-        
+        uart_print(&myUart1, "interrupciones parc 3 v1!\r\n");
+    
+    //configuración interrupciones
+    //queremos
+    
     
     uint8_t counter = 0;   
     for (;;) {
