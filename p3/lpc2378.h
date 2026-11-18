@@ -46,6 +46,7 @@
 #define U1THR       (*(volatile uint8_t*) 0xE0010000u)
 // estado de la línea pág 446
 #define U1LSR       (*(volatile uint8_t*) 0xE0010014u)
-
+//interrupciones externas, flanco o nivel,
+#define EXTMODE (*(volatile uint_t*) 0x)
 
 #endif
