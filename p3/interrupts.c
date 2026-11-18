@@ -88,8 +88,10 @@ int main(void)
     if(myUart1.configured)
         uart_print(&myUart1, "interrupciones parc 3 v1!\r\n");
     
-    //configuración interrupciones
-    //queremos
+    //interrupcion EINT0 por flanco
+    EXTMODE |= (1u << 0);
+    //
+    EXTPOLAR &= ~(1u <<0);
     
     
     uint8_t counter = 0;   
