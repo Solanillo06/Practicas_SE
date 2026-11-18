@@ -1,4 +1,4 @@
-TARGET := uart-test
+TARGET := interrupts
 
 PREFIX := arm-none-eabi-
 
@@ -31,7 +31,7 @@ LDFLAGS := \
 	-Wl,--gc-sections \
 	-Wl,-Map=$(TARGET).map
 
-OBJS := startup.o uart-test.o
+OBJS := startup.o uart.o interrupts.o
 
 
 all: $(TARGET).elf $(TARGET).bin
@@ -39,7 +39,10 @@ all: $(TARGET).elf $(TARGET).bin
 startup.o: startup.S
 	$(CC) $(ASFLAGS) -c $< -o $@
 
-input-polling.o: input-polling.c
+uart.o: uart.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+interrupts.o: interrupts.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TARGET).elf: $(OBJS) linker.ld
@@ -54,5 +57,8 @@ dump: $(TARGET).elf
 
 clean:
 	rm -f *.o *.elf *.bin *.map
+
+flash:
+	openocd -f interface/cmsis-dap -f mcb2300.cfg -c 'init' -c 'reset halt'   -c 'program $(TARGET).elf' -c 'reset run' -c 'shutdown'
 
 .PHONY: all clean dump
