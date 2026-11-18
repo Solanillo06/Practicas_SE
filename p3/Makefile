@@ -59,6 +59,6 @@ clean:
 	rm -f *.o *.elf *.bin *.map
 
 flash:
-	openocd -f interface/cmsis-dap -f mcb2300.cfg -c 'init' -c 'reset halt'   -c 'program $(TARGET).elf' -c 'reset run' -c 'shutdown'
+	openocd -f interface/cmsis-dap.cfg -f mcb2300.cfg -c 'init' -c 'reset halt'   -c 'program $(TARGET).elf' -c 'reset run' -c 'shutdown'
 
 .PHONY: all clean dump

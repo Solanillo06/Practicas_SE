@@ -73,7 +73,7 @@ Habrá que:
 Emplearemos los registros:
 ```
 // habrá que configurar el pin 2.10 no como GPIO si no como EINT0!!
-PINSEL4
+PINSEL4 (0xE002 C010)
 
 // Para indicar que empleamos IRQ para la interrupción EINT0
 VICIntSelect
@@ -81,10 +81,10 @@ VICIntSelect
 // Para habilitar la interrupción EINT0 (esto se debe de hacer ya lo último!)
 VICIntEnable
 
-// para saber si la fuente de una interrupción IRQ es nuestro EINT0, analizaremos este registro
+// Para saber si la fuente de una interrupción IRQ es nuestro EINT0, analizaremos este registro
 VICIRQStatus
 
-/// PAra configurar el comportamiento de EINT0:
+/// Para configurar el comportamiento de EINT0:
 // Para que EINT0 detecte flancos y no niveles
 EXTMODE
 

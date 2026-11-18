@@ -5,6 +5,8 @@
 
 #define LED10 (1u << 10)
 
+volatile uint8_t boton_pulsado;
+
 
 const char* uint8_tToString(uint8_t number)
 {
@@ -40,7 +42,10 @@ const char* uint8_tToString(uint8_t number)
 /* Required by startup.S */
 void irq_handler_c(void)
 {
-    for (;;) {
+    // eint0 ??
+    if (VICIRQStatus & (1u << 14)){ // comprobamos que el bit 14 vale 1
+        boton_pulsado = 1;
+        EXTINT |= (1u << 0); // reiniciamos la flag de interrupcion.
     }
 }
 
@@ -55,9 +60,8 @@ int main(void)
 {
     // configuramos el puerto como GPIO, valor 00. Página: 
     PINSEL4 &= ~(0b1100001111111111111111);
-    //pin 2.10 ya no es GPIO es !EINT0
-    PINSEL4 &= ~(1u<<21);
-    PINSEL4 |= (1u << 20);
+    PINSEL4 &= ~(1U << 21);
+    PINSEL4 |= (1U << 20);
 
     // 8 bits bajos como salidas
     FIO2DIR0 |= 255u;
@@ -86,16 +90,22 @@ int main(void)
     else
         FIO2SET0 = (1u << 3);
     if(myUart1.configured)
-        uart_print(&myUart1, "interrupciones parc 3 v1!\r\n");
-    
-    //interrupcion EINT0 por flanco
+        uart_print(&myUart1, "Practica 3 v2\r\n");
+    // interrupcion EINT0 por flanco
     EXTMODE |= (1u << 0);
-    //
-    EXTPOLAR &= ~(1u <<0);
+    // como flanco de bajada
+    EXTPOLAR &= ~(1u << 0);
+    // reset causa de disparo
+    EXTINT |= (1u << 0);
+    boton_pulsado = 0;
+    // eint0 como IRQ no FIQ
+    VICIntSelect &= ~(1u << 14);
+
     
-    
-    uint8_t counter = 0;   
+    uint8_t counter = 0;
+    VICIntEnable |=(1u << 14);  
     for (;;) {
+        /*
         if(!(FIO2PIN & LED10))
         {
             counter++;
@@ -106,6 +116,11 @@ int main(void)
             uart_print(&myUart1, "\r\n");
             while(!(FIO2PIN & LED10))
             {}
+        }
+        */
+        if (boton_pulsado){
+            uart_print(&myUart1, "botón pulsado \r\n");
+            boton_pulsado = 0;
         }
     }
     return 0;
