@@ -59,6 +59,8 @@
 // lee el estado de las interrupciones, pag 90
 #define VICIRQStatus    (*(volatile uint32_t*)0xFFFFF000u)
 
+#define PCON        (*(volatile uint8_t*)0xE01FC0C0u)
+
 
 
 

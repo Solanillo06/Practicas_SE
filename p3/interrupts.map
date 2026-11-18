@@ -17,13 +17,8 @@ Discarded input sections
  .text          0x00000000        0x0 interrupts.o
  .data          0x00000000        0x0 interrupts.o
  .bss           0x00000000        0x0 interrupts.o
- .text.uint8_tToString
-                0x00000000       0xf4 interrupts.o
- .bss.sNumber.0
-                0x00000000        0x3 interrupts.o
  .debug_macro   0x00000000      0xaa8 interrupts.o
  .debug_macro   0x00000000      0x34e interrupts.o
- .debug_macro   0x00000000       0xa0 interrupts.o
  .comment       0x00000000       0x27 interrupts.o
 
 Memory Configuration
@@ -50,7 +45,7 @@ LOAD interrupts.o
  .vectors       0x00000000       0x20 startup.o
                 0x00000000                _start
 
-.text           0x00000020      0x50c
+.text           0x00000020      0x660
                 0x00000020                        . = ALIGN (0x4)
  *(.text*)
  .text.Reset_Handler
@@ -71,67 +66,71 @@ LOAD interrupts.o
  .text.uart_print
                 0x00000320       0x30 uart.o
                 0x00000320                uart_print
+ .text.uint8_tToString
+                0x00000350       0xf4 interrupts.o
+                0x00000350                uint8_tToString
  .text.irq_handler_c
-                0x00000350       0x38 interrupts.o
-                0x00000350                irq_handler_c
+                0x00000444       0x38 interrupts.o
+                0x00000444                irq_handler_c
  .text.fiq_handler_c
-                0x00000388        0x4 interrupts.o
-                0x00000388                fiq_handler_c
- .text.main     0x0000038c      0x174 interrupts.o
-                0x0000038c                main
+                0x0000047c        0x4 interrupts.o
+                0x0000047c                fiq_handler_c
+ .text.main     0x00000480      0x1bc interrupts.o
+                0x00000480                main
  *(.rodata*)
  .rodata.validBauds
-                0x00000500        0x8 uart.o
+                0x0000063c        0x8 uart.o
  .rodata.main.str1.4
-                0x00000508       0x22 interrupts.o
+                0x00000644       0x3b interrupts.o
  *(.glue_7)
- .glue_7        0x0000052a        0x0 linker stubs
+ .glue_7        0x0000067f        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0000052a        0x0 linker stubs
-                0x0000052c                        . = ALIGN (0x4)
- *fill*         0x0000052a        0x2 
+ .glue_7t       0x0000067f        0x0 linker stubs
+                0x00000680                        . = ALIGN (0x4)
+ *fill*         0x0000067f        0x1 
 
-.vfp11_veneer   0x0000052c        0x0
- .vfp11_veneer  0x0000052c        0x0 linker stubs
+.vfp11_veneer   0x00000680        0x0
+ .vfp11_veneer  0x00000680        0x0 linker stubs
 
-.v4_bx          0x0000052c        0x0
- .v4_bx         0x0000052c        0x0 linker stubs
+.v4_bx          0x00000680        0x0
+ .v4_bx         0x00000680        0x0 linker stubs
 
-.iplt           0x0000052c        0x0
- .iplt          0x0000052c        0x0 startup.o
+.iplt           0x00000680        0x0
+ .iplt          0x00000680        0x0 startup.o
 
-.rel.dyn        0x0000052c        0x0
- .rel.iplt      0x0000052c        0x0 startup.o
+.rel.dyn        0x00000680        0x0
+ .rel.iplt      0x00000680        0x0 startup.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM.exidx      0x0000052c        0x0
-                0x0000052c                        __exidx_start = .
+.ARM.exidx      0x00000680        0x0
+                0x00000680                        __exidx_start = .
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
-                0x0000052c                        __exidx_end = .
+                0x00000680                        __exidx_end = .
 
-.data           0x40000000        0x0 load address 0x0000052c
+.data           0x40000000        0x0 load address 0x00000680
                 0x40000000                        . = ALIGN (0x4)
                 0x40000000                        _sdata = .
  *(.data*)
                 0x40000000                        . = ALIGN (0x4)
                 0x40000000                        _edata = .
-                0x0000052c                        _sidata = LOADADDR (.data)
+                0x00000680                        _sidata = LOADADDR (.data)
 
-.igot.plt       0x40000000        0x0 load address 0x0000052c
+.igot.plt       0x40000000        0x0 load address 0x00000680
  .igot.plt      0x40000000        0x0 startup.o
 
-.bss            0x40000000        0x4 load address 0x0000052c
+.bss            0x40000000        0x4 load address 0x00000680
                 0x40000000                        . = ALIGN (0x4)
                 0x40000000                        _sbss = .
  *(.bss*)
+ .bss.sNumber.0
+                0x40000000        0x3 interrupts.o
  .bss.boton_pulsado
-                0x40000000        0x1 interrupts.o
-                0x40000000                boton_pulsado
+                0x40000003        0x1 interrupts.o
+                0x40000003                boton_pulsado
  *(COMMON)
                 0x40000004                        . = ALIGN (0x4)
- *fill*         0x40000001        0x3 
                 0x40000004                        _ebss = .
                 0x40000008                        . = ALIGN (0x8)
                 0x40000008                        _end = .
@@ -172,20 +171,20 @@ LOAD linker stubs
  .ARM.attributes
                 0x0000004a       0x2a interrupts.o
 
-.debug_line     0x00000000      0x579
+.debug_line     0x00000000      0x59a
  .debug_line    0x00000000       0xae startup.o
  .debug_line    0x000000ae      0x278 uart.o
- .debug_line    0x00000326      0x253 interrupts.o
+ .debug_line    0x00000326      0x274 interrupts.o
 
 .debug_line_str
                 0x00000000       0x2c
  .debug_line_str
                 0x00000000       0x2c startup.o
 
-.debug_info     0x00000000      0x5a3
+.debug_info     0x00000000      0x605
  .debug_info    0x00000000       0x31 startup.o
  .debug_info    0x00000031      0x2dd uart.o
- .debug_info    0x0000030e      0x295 interrupts.o
+ .debug_info    0x0000030e      0x2f7 interrupts.o
 
 .debug_abbrev   0x00000000      0x38b
  .debug_abbrev  0x00000000       0x26 startup.o
@@ -200,11 +199,11 @@ LOAD linker stubs
  .debug_aranges
                 0x00000068       0x38 interrupts.o
 
-.debug_str      0x00000000     0x3c6c
- .debug_str     0x00000000     0x3c6c startup.o
+.debug_str      0x00000000     0x3c93
+ .debug_str     0x00000000     0x3c93 startup.o
                                  0x46 (size before relaxing)
- .debug_str     0x00003c6c     0x3d34 uart.o
- .debug_str     0x00003c6c     0x3d66 interrupts.o
+ .debug_str     0x00003c93     0x3d34 uart.o
+ .debug_str     0x00003c93     0x3d8d interrupts.o
 
 .debug_rnglists
                 0x00000000       0x7a
@@ -216,19 +215,20 @@ LOAD linker stubs
                 0x00000053       0x27 interrupts.o
 
 .debug_loclists
-                0x00000000      0x26b
+                0x00000000      0x284
  .debug_loclists
                 0x00000000      0x19b uart.o
  .debug_loclists
-                0x0000019b       0xd0 interrupts.o
+                0x0000019b       0xe9 interrupts.o
 
-.debug_macro    0x00000000      0xef6
+.debug_macro    0x00000000      0xf9c
  .debug_macro   0x00000000       0x2d uart.o
  .debug_macro   0x0000002d      0xaa8 uart.o
  .debug_macro   0x00000ad5      0x34e uart.o
  .debug_macro   0x00000e23       0xa0 uart.o
  .debug_macro   0x00000ec3       0x33 interrupts.o
+ .debug_macro   0x00000ef6       0xa6 interrupts.o
 
-.debug_frame    0x00000000       0xe4
+.debug_frame    0x00000000       0xe8
  .debug_frame   0x00000000       0x8c uart.o
- .debug_frame   0x0000008c       0x58 interrupts.o
+ .debug_frame   0x0000008c       0x5c interrupts.o

@@ -90,7 +90,7 @@ int main(void)
     else
         FIO2SET0 = (1u << 3);
     if(myUart1.configured)
-        uart_print(&myUart1, "Practica 3 v2\r\n");
+        uart_print(&myUart1, "Practica 3 v4\r\n");
     // interrupcion EINT0 por flanco
     EXTMODE |= (1u << 0);
     // como flanco de bajada
@@ -105,23 +105,14 @@ int main(void)
     uint8_t counter = 0;
     VICIntEnable |=(1u << 14);  
     for (;;) {
-        /*
-        if(!(FIO2PIN & LED10))
-        {
-            counter++;
-            FIO2CLR0 = ~counter; 
-            FIO2SET0 = counter;
-            uart_print(&myUart1, "printing number: ");
-            uart_print(&myUart1, uint8_tToString(counter));
-            uart_print(&myUart1, "\r\n");
-            while(!(FIO2PIN & LED10))
-            {}
-        }
-        */
-        if (boton_pulsado){
-            uart_print(&myUart1, "botón pulsado \r\n");
-            boton_pulsado = 0;
-        }
+        uart_print(&myUart1, "me voy a dormir\r\n");
+        PCON |= (1u << 0);
+        counter++;
+        FIO2CLR0 = ~counter;
+        FIO2SET0 = counter;
+        uart_print(&myUart1, "printing number: ");
+        uart_print(&myUart1, uint8_tToString(counter));
+        uart_print(&myUart1, "\r\n");
     }
     return 0;
 }
