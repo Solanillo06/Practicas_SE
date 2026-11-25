@@ -65,4 +65,8 @@
 // modos de energía, pág:65
 #define PCON        (*(volatile uint8_t*) 0xE01FC0C0u)
 
+#define T0TC (*(volatile uint32_t*) 0xE0004008u)
+#define T0PR (*(volatile uint32_t*) 0xE000400Cu)
+#define T0CR (*(volatile uint8_t*) 0xE0004004u)
+
 #endif
