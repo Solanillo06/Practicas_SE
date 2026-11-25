@@ -5,7 +5,7 @@
 
 #define LED10 (1u << 10)
 
-volatile uint8_t boton_pulsado;
+volatile uint8_t flags_irq;
 
 
 const char* uint8_tToString(uint8_t number)
@@ -45,9 +45,15 @@ void irq_handler_c(void)
     // EINT0 ??
     if (VICIRQStatus & (1u << 14))
     {
-        boton_pulsado = 1;
+        flags_irq = (1 << 0);
         EXTINT |= (1u << 0);
+        T0CR = (1 << 1);
+        T0CR = (1 << 0);
     }
+    else if(VICIRQStatus & (1u << 4)){
+        flags_irq = (1 << 1);
+        T0IR = 255u;
+    }   
 }
 
 /* Required by startup.S */
