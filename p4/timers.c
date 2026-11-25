@@ -122,6 +122,12 @@ int main(void)
     PCLKSEL0 |= (1 << 2);
     T0PR = 3999u;
     T0PR = (1 << 1);
+
+    T0MR = 5000;
+    T0MCR = 3u;
+    T0IR = 255u;
+    //interrupción del timer como IRQ no como FIQ
+    VICIntSelect &= ~(1u << 4);
     
     uint8_t counter = 0;
     // habilitamos la interrupción por EINT0
