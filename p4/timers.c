@@ -132,6 +132,9 @@ int main(void)
     uint8_t counter = 0;
     // habilitamos la interrupción por EINT0
     VICIntEnable |=(1u << 14); 
+
+    // habilitamos la interrpción por TIMER0
+    VICIntEnable |= (1u << 4);
     for (;;) 
     {
         uart_print(&myUart1, "me voy a dormir! \r\n");
