@@ -57,6 +57,17 @@ void fiq_handler_c(void)
     }
 }
 
+void delay_ms(uint32_t ms){
+    if (ms == 0){
+        return;
+    }
+    T0CR = (1 << 1);
+    T0CR = (1 << 0);
+    while(T0TC < ms){}
+    T0CR = 0;
+    return;
+}
+
 int main(void)
 {
     // configuramos el puerto como GPIO, valor 00. Página: 
@@ -71,6 +82,7 @@ int main(void)
     // vamos a fijar la entrada con resistencia pull-up
     // página  156!
     PINMODE4 &= ~(3u << 20);
+    
 
     // configuración de la UART1
     lpc_uart myUart1;
@@ -100,6 +112,16 @@ int main(void)
     boton_pulsado = 0;
     // EINT0 como IRQ no FIQ
     VICIntSelect &= ~(1u << 14);
+
+    // timer 0
+    // fuente de reloj del timer 0
+    // el oscilador interno (IR) es de 4M
+    // es nuestra fuente
+    // 
+    PCLKSEL0 &= ~(1 << 3);
+    PCLKSEL0 |= (1 << 2);
+    T0PR = 3999u;
+    T0PR = (1 << 1);
     
     uint8_t counter = 0;
     // habilitamos la interrupción por EINT0
@@ -112,6 +134,7 @@ int main(void)
         // si ejecutamos aquí, es que la interrupción nos despertó
         if(boton_pulsado)
             uart_print(&myUart1, "botón pulsado! \r\n");
+        delay_ms(500);
         counter++;
         FIO2CLR0 = ~counter; 
         FIO2SET0 = counter;
